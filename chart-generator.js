@@ -42,7 +42,7 @@ class ChartGenerator {
 		}
 	}
 	async generateChart(type, domId, dataName, resources) {
-		var url = location.origin + "/chart/data/" + dataName + "/setting.json";
+		var url = location.origin + "/chart/data/" + dataName + "/setting.json?" + Math.random();
 		var prms = await fetch(url);
 		var data = await prms.json();
 
@@ -71,7 +71,7 @@ class ChartGenerator {
 		var resourceAry = resources.split(',');
 		for (let i = 0; i < resourceAry.length; ++i) {
 			var resource = resourceAry[i];
-			url = location.origin + "/chart/data/" + dataName + "/" + resource + ".json";
+			url = location.origin + "/chart/data/" + dataName + "/" + resource + ".json?" + Math.random();
 			prms = await fetch(url);
 			data = await prms.json();
 			switch (type) {
@@ -108,6 +108,7 @@ class ChartGenerator {
 				scales: {
 					yAxes: [{
 						scaleLabel: {
+							display: true,
 							labelString: ylabel
 						},
 						ticks: {
@@ -147,6 +148,7 @@ class ChartGenerator {
 					yAxes: [{
 						stacked: true,
 						scaleLabel: {
+							display: true,
 							labelString: ylabel
 						},
 						ticks: {
@@ -182,6 +184,7 @@ class ChartGenerator {
 				scales: {
 					yAxes: [{
 						scaleLabel: {
+							display: true,
 							labelString: ylabel
 						},
 						ticks: {

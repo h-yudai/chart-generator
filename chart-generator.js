@@ -56,6 +56,9 @@ class ChartGenerator {
 			case 'stacked-bar':
 				this.makeStackedBarChart(ctx, data.title, labelAry, data.ylabel);
 				break;
+			case 'horizontalBar':
+				this.makeHorizontalBarChart(ctx, data.title, labelAry, data.ylabel);
+				break;
 			case 'line':
 				this.makeLineChart(ctx, data.title, labelAry, data.ylabel);
 				break;
@@ -80,6 +83,9 @@ class ChartGenerator {
 					break;
 				case 'stacked-bar':
 					this.addStackedBarData(data);
+					break;
+				case 'horizontalBar':
+					this.addBarData(data);
 					break;
 				case 'line':
 					this.addLineData(data);
@@ -163,6 +169,45 @@ class ChartGenerator {
 					callbacks: {
 							label: function(tooltipItem, data){
 							return tooltipItem.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+						}
+					}
+				}
+			}
+		});
+	}
+	makeHorizontalBarChart(ctx, title, labelAry, ylabel) {
+		this.chart = new Chart(ctx, {
+			type: 'horizontalBar',
+			data: {
+				labels: labelAry,
+				datasets: []
+			},
+			options: {
+				animation: {duration: 0},
+				responsive: true,
+				legend: {position: 'top'},
+				title: {display: false, text: title},
+				scales: {
+					yAxes: [{
+						scaleLabel: {
+							display: true,
+							labelString: ylabel
+						},
+						ticks: {
+							callback: function(label, index, labels) {
+								if(label.length > 20){
+									return [label.substr(0, 20), label.substr(20)]
+								}else{
+									return label;
+								}
+							}
+						}
+					}]
+				},
+				tooltips: {
+					callbacks: {
+							label: function(tooltipItem, data){
+							return tooltipItem.xLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 						}
 					}
 				}
